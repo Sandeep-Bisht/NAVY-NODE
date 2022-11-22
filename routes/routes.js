@@ -11,7 +11,7 @@ const { createCategory, getCategories } = require('../controller/category.js')
 // //const { handle404Route } = require('../controller/404')
 
 
-router.get("/getuser", getUsers);
+router.post("/getuser", getUsers);
 router.post("/userRregistration", userRregistration);
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
