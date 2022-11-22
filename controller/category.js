@@ -31,4 +31,17 @@ exports.getCategories = async(req, res) => {
     }
 }
 
+exports.updateCategory = async(req, res) => {
+        const { _id, categoryName, categoryDescription } = req.body
+        let user = await category.findById(_id)
+        user.categoryName = categoryName
+        try {
+            let updateEntry = await user.save()
+            res.json({ message: "Category updated successfully" })
+        }
+        catch (err) {
+            res.send(err)
+        }
+}
+
 
