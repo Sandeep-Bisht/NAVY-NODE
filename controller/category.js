@@ -11,7 +11,7 @@ exports.createCategory = async (req, res) => {
     }
   }
   if(categoryAllReadyExist){
-    return res.send({message:"All ready exist"})
+    return res.send({errorMessage:"All ready exist"})
   }
     try {
       let saveUser = await data.save();
