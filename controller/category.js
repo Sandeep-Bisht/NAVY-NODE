@@ -2,6 +2,17 @@ let category = require("../models/category");
 
 exports.createCategory = async (req, res) => {
   let data = new category(req.body)
+  let response = await category.find();
+  let categoryAllReadyExist = false
+  for(let item of response){
+    if(item.categoryName == data.categoryName){
+        categoryAllReadyExist = true
+        break;
+    }
+  }
+  if(categoryAllReadyExist){
+    return res.send({message:"All ready exist"})
+  }
     try {
       let saveUser = await data.save();
       res.send({ message: "Category save successfully" });

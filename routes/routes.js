@@ -7,7 +7,8 @@ const { addGuestList } = require("../controller/addInvites");
 const { getGuestList } = require("../controller/addInvites");
 const { sendInvitation } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
-const { createCategory, getCategories } = require('../controller/category.js')
+const { createCategory, getCategories } = require('../controller/category.js');
+const { getAllDashboardCounts } = require('../controller/dashboardapi.js')
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -19,6 +20,7 @@ router.post("/sendInvitation", sendInvitation);
 router.post("/sendInvitationToAll", sendInvitationToAll);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
+router.get('/getcounts', getAllDashboardCounts);
 // //router.get('/*', handle404Route )
 
 module.exports = router;
