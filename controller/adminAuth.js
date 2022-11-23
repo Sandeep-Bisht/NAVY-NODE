@@ -5,15 +5,14 @@ exports.getUsers = async (req, res) => {
     if (userEmail == "" && password == "") {
         return res.send({ message: "Please fill the field" })
     }
-    console.log('get users hit', req)
+    // console.log('get users hit', req)
     let user = await registration.findOne({ userEmail }) 
     
     try {
-        console.log("inside try", user)
+        // console.log("inside try", user)
         if (user) {
             if(user.userEmail.trim().toLowerCase() == userEmail.trim().toLowerCase() &&
             user.password.trim().toLowerCase() == password.trim().toLowerCase()) {
-                //res.send({ token, message: "Logged in successfully" })
                 res.send({ message: "Logged in successfully" })
             }         
         } else {

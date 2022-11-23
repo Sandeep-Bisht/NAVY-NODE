@@ -1,4 +1,4 @@
-const addInvites = require("../models/invititionForm");
+const addInvites = require("../models/invititionForm");  // GUest list Table
 
 exports.addGuestList = async (req, res) => {
   let {
@@ -9,6 +9,8 @@ exports.addGuestList = async (req, res) => {
     guestOfficeNumber,
     guestEmail,
     guestAddress,
+    invitationStatus,
+    availability
   } = req.body;
 
   if (
@@ -18,7 +20,9 @@ exports.addGuestList = async (req, res) => {
     guestNumber == "" &&
     guestOfficeNumber == "" &&
     guestEmail == "" &&
-    guestAddress == ""
+    guestAddress == "" &&
+    invitationStatus == "" && 
+    availability == ""
   ) {
     return res.send({ message: "please fill the field " });
   }
@@ -31,6 +35,8 @@ exports.addGuestList = async (req, res) => {
     guestOfficeNumber,
     guestEmail,
     guestAddress,
+    invitationStatus,
+    availability
   });
   try {
     let saveInvites = await guestList.save();
@@ -42,10 +48,10 @@ exports.addGuestList = async (req, res) => {
 
 
 exports.getGuestList = async (req, res) => {
-    console.log("getGuestList")
+    // console.log("getGuestList")
     try {
         let response = await addInvites.find()
-        console.log(response,'res')
+        // console.log(response,'res')
         if(response){
             res.send(response)
         } else {
