@@ -9,7 +9,8 @@ const { sendInvitation } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory } = require('../controller/category.js');
-const { getAllDashboardCounts } = require('../controller/dashboardapi.js')
+const { getAllDashboardCounts } = require('../controller/dashboardapi.js');
+const { createDepartment } = require("../controller/department.js");
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -20,6 +21,7 @@ router.get("/verifyGuestByToken", verifyGuestByToken)
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
 router.post("/sendInvitation", sendInvitation);
+router.post("/saveDepartment", createDepartment)
 router.post("/sendInvitationToAll", sendInvitationToAll);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
