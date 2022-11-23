@@ -10,6 +10,7 @@ const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
+const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -28,6 +29,14 @@ router.get('/getCartsCounts', getCartsCounts);
 router.get('/getCategoryUserCount', getCategoryUserCount);
 router.get('/getConfirmationCount', getConfirmationCount);
 // Dashboard APi End
+
+// Department APi
+
+router.post("/createDepartment", createDepartment);
+router.get('/getDepartments', getDepartments);
+router.patch('/updateDepartment', updateDepartment)
+
+// End Department Api
 router.patch('/updatecategory', updateCategory)
 // //router.get('/*', handle404Route )
 
