@@ -9,7 +9,7 @@ const { sendInvitation } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory } = require('../controller/category.js');
-const { getAllDashboardCounts } = require('../controller/dashboardapi.js')
+const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -23,7 +23,11 @@ router.post("/sendInvitation", sendInvitation);
 router.post("/sendInvitationToAll", sendInvitationToAll);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
-router.get('/getcounts', getAllDashboardCounts);
+// Dashboard Apis
+router.get('/getCartsCounts', getCartsCounts);
+router.get('/getCategoryUserCount', getCategoryUserCount);
+router.get('/getConfirmationCount', getConfirmationCount);
+// Dashboard APi End
 router.patch('/updatecategory', updateCategory)
 // //router.get('/*', handle404Route )
 
