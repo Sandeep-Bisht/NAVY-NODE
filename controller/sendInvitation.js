@@ -14,12 +14,12 @@ const genRandString = (len) => {
 
 exports.sendInvitation = async (req, res) => { 
   let { guestName, guestDesignation, guestNumber, guestEmail,_id } = req.body;
-   console.log("send Invitation hit", _id);
+  //  console.log("send Invitation hit", _id);
    if (guestName) {
     //let token = generateAccessToken({ _id })
     let generatedString = genRandString(10);
     let url = `http://inho.in/confirmation/${generatedString}` 
-    console.log("url", url)
+    // console.log("url", url)
                 //res.send({ token, message: "Logged in successfully" })
     try {
       const options = {
@@ -73,11 +73,11 @@ exports.sendInvitation = async (req, res) => {
 
 exports.sendInvitationCard = async (req, res) => { 
   let { guestName, guestNumber,_id } = req.body;
-   console.log("send sendInvitation Card hit", _id);
+  //  console.log("send sendInvitation Card hit", _id);
    if (guestName) {
     let generatedString = genRandString(10);
     let url = `http://inho.in/navyday/${generatedString}` 
-    console.log("url", url)
+    // console.log("url", url)
     try {
       const options = {
         method: "POST",
