@@ -3,8 +3,8 @@ dotenv.config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.db_url, {
     auth: {
-        "username": "Navydaydmin",
-        "password": "SOSh3AWDPC4499GTbYhxY8",
+        "username": "nhodehradun",
+        "password": "nhodoon1234",
     },
     useNewUrlParser: true,
     useUnifiedTopology: true
