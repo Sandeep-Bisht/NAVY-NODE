@@ -8,6 +8,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber,
     guestOfficeNumber,
     guestEmail,
+    guestCategory,
     guestAddress,
     invitationStatus,
     availability
@@ -20,6 +21,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber == "" &&
     guestOfficeNumber == "" &&
     guestEmail == "" &&
+    guestCategory == "" &&
     guestAddress == "" &&
     invitationStatus == "" && 
     availability == ""
@@ -34,6 +36,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber,
     guestOfficeNumber,
     guestEmail,
+    guestCategory,
     guestAddress,
     invitationStatus,
     availability

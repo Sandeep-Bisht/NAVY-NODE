@@ -11,7 +11,8 @@ const invitationSchema = new Schema({
     guestAddress : { type : String, require : true },
     invitationStatus : { type : String},
     availability : { type : String },
-    stringToken : { type : String}
+    stringToken : { type : String},
+    guestCategory : { type : String, require :true },
 
 }, {timestamp : true}
 )
