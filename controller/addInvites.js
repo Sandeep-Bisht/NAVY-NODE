@@ -8,6 +8,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber,
     guestOfficeNumber,
     guestEmail,
+    guestCategory,
     guestAddress,
   } = req.body;
 
@@ -18,6 +19,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber == "" &&
     guestOfficeNumber == "" &&
     guestEmail == "" &&
+    guestCategory == "" &&
     guestAddress == ""
   ) {
     return res.send({ message: "please fill the field " });
@@ -30,6 +32,7 @@ exports.addGuestList = async (req, res) => {
     guestNumber,
     guestOfficeNumber,
     guestEmail,
+    guestCategory,
     guestAddress,
   });
   try {
@@ -42,11 +45,10 @@ exports.addGuestList = async (req, res) => {
 
 
 exports.getGuestList = async (req, res) => {
-    console.log("getGuestList")
     try {
         let response = await addInvites.find()
-        console.log(response,'res')
-        if(response){
+
+        if(response){         
             res.send(response)
         } else {
             res.send({message : "No Record found"})

@@ -8,6 +8,7 @@ const invitationSchema = new Schema({
     guestNumber : { type : String, require : true },
     guestOfficeNumber : { type : String, require : true },
     guestEmail : { type : String, require : true },
+    guestCategory : { type : String, require :true },
     guestAddress : { type : String, require : true }
 
 }, {timestamp : true}

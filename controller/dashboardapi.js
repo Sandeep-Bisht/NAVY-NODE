@@ -2,13 +2,16 @@ const addInvites = require("../models/invititionForm");
 let category = require("../models/category");
 
 exports.getAllDashboardCounts = async(req, res) => {
-    let users = await addInvites.count()
-    let civilianCount =  await addInvites.find({categoryName:"Civilian officers"}).count()
-    let navyOfficerCount =  await addInvites.find({categoryName:"Navy officers"}).count()
+    let usersCount = await addInvites.count()
+    let sentSmsCount =  await addInvites.find({invitationStatus:"Invitation Sent"})
+    let pendingSmsCount =  await addInvites.find({invitationStatus:"null"})
+    let failedSmsCount = await addInvites.find({invitationStatus:"failed"})
+
     let responseObj = {
-        usersCount:users,
-        civilianCount,
-        navyOfficerCount
+        usersCount,
+        sentSmsCount,
+        pendingSmsCount,
+        failedSmsCount
     }
     res.send({responseObj, message:"Request completed successfully"})
 }
