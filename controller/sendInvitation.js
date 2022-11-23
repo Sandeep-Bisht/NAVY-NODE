@@ -1,11 +1,11 @@
 var jwt = require('jsonwebtoken');
-let sendInvitation = require("../models/sendInvitation");
+// let sendInvitation = require("../models/sendInvitation");
 const addInvites = require("../models/invititionForm");
 const http = require("https");
 
-function generateAccessToken(userId) {
-  return jwt.sign({ userId }, "6210607b75c134501baa290c", { expiresIn: '1800s' });
-}
+// function generateAccessToken(userId) {
+//   return jwt.sign({ userId }, "6210607b75c134501baa290c", { expiresIn: '1800s' });
+// }
 const genRandString = (len) => {
   return Math.random().toString(36).substring(2,len+2);
 }
