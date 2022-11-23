@@ -21,6 +21,7 @@ router.get("/verifyGuestByToken", verifyGuestByToken)
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
 router.post("/sendInvitation", sendInvitation);
+router.post("/saveDepartment", createDepartment)
 router.post("/sendInvitationToAll", sendInvitationToAll);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
