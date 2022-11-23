@@ -1,11 +1,26 @@
-//let registration = require("../models/registration");
+var jwt = require('jsonwebtoken');
 let sendInvitation = require("../models/sendInvitation");
+const addInvites = require("../models/invititionForm");
 const http = require("https");
 
+function generateAccessToken(userId) {
+  return jwt.sign({ userId }, "6210607b75c134501baa290c", { expiresIn: '1800s' });
+}
+const genRandString = (len) => {
+  return Math.random().toString(36).substring(2,len+2);
+}
+
+
+
 exports.sendInvitation = async (req, res) => {
-  let { guestName, guestDesignation, guestNumber, guestEmail } = req.body;
-  // console.log("send Invitation hit");
-  if (guestName) {
+  let { guestName, guestDesignation, guestNumber, guestEmail,_id } = req.body;
+   console.log("send Invitation hit", _id);
+   if (guestName) {
+    //let token = generateAccessToken({ _id })
+    let generatedString = genRandString(10);
+    let url = `http://localhost:3000/confirmation/${generatedString}` 
+    console.log("url", url)
+                //res.send({ token, message: "Logged in successfully" })
     try {
       const options = {
         method: "POST",
@@ -26,7 +41,7 @@ exports.sendInvitation = async (req, res) => {
 
         res.on("end", function () {
           const body = Buffer.concat(chunks);
-          console.log(body.toString());
+          console.log(body.toString(), "this is respopnse");
         });
       });
 
@@ -35,19 +50,25 @@ exports.sendInvitation = async (req, res) => {
           guestNumber +
           '",\n      "depth": "' +
           guestName +
-          '",\n      "difference": "' +
-          guestDesignation +
+          '",\n      "difference": "' +          
+          url +
           '"\n    }\n  ]\n}'
       );
       req.end();
 
       // let sendInvitation = await guestList.save();
       //  res.send({ message: "Guest details saved successfully" });
+      let user = await addInvites.findOne({ _id })
+      if (user) {
+        user.invitationStatus = "Invitation Sent";
+        user.stringToken = generatedString ;
+        let updateEntry = await user.save()
+      }  
       res.send({ message: "Invitation sent successfully" });
     } catch (error) {
       res.send({ message: "Somthing went wrong" });
     }
-  }
+   }
 };
 
 exports.sendInvitationToAll = async (req, res) => {
@@ -64,11 +85,8 @@ exports.sendInvitationToAll = async (req, res) => {
    }
 
 
-   console.log("final arr",recipients);
-      
-  
-    
-    try {
+  //  console.log("final arr",recipients);  
+      try {
       const options = {
         method: "POST",
         hostname: "api.msg91.com",
