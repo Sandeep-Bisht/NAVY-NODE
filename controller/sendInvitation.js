@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken');
+var jwt = require("jsonwebtoken");
 // let sendInvitation = require("../models/sendInvitation");
 const addInvites = require("../models/invititionForm");
 const http = require("https");
@@ -7,20 +7,18 @@ const http = require("https");
 //   return jwt.sign({ userId }, "6210607b75c134501baa290c", { expiresIn: '1800s' });
 // }
 const genRandString = (len) => {
-  return Math.random().toString(36).substring(2,len+2);
-}
+  return Math.random()
+    .toString(36)
+    .substring(2, len + 2);
+};
 
-
-
-exports.sendInvitation = async (req, res) => { 
-  let { guestName, guestDesignation, guestNumber, guestEmail,_id } = req.body;
-   console.log("send Invitation hit", _id);
-   if (guestName) {
-    //let token = generateAccessToken({ _id })
+exports.sendInvitation = async (req, res) => {
+  let { guestName, guestDesignation, guestNumber, _id } = req.body;
+  console.log("send Invitation hit", _id);
+  if (guestName) {
     let generatedString = genRandString(10);
-    let url = `http://inho.in/confirmation/${generatedString}` 
-    console.log("url", url)
-                //res.send({ token, message: "Logged in successfully" })
+     let url = `http://inho.in/navyday/${generatedString}`
+    //let url = `http://localhost:3000/navyday/${generatedString} `;
     try {
       const options = {
         method: "POST",
@@ -50,34 +48,33 @@ exports.sendInvitation = async (req, res) => {
           guestNumber +
           '",\n      "depth": "' +
           guestName +
-          '",\n      "difference": "' +          
+          '",\n      "difference": "' +
           url +
           '"\n    }\n  ]\n}'
       );
       req.end();
-
-      // let sendInvitation = await guestList.save();
-      //  res.send({ message: "Guest details saved successfully" });
-      let user = await addInvites.findOne({ _id })
+      let user = await addInvites.findOne({ _id });
       if (user) {
-        user.invitationCard = "Sent";
-        user.stringToken = generatedString ;
-        let updateEntry = await user.save()
-      }  
+        user.invitationCard = "Invitation Sent";
+        user.stringToken = generatedString;
+        let updateEntry = await user.save();
+      }
       res.send({ message: "Invitation card sent successfully" });
     } catch (error) {
       res.send({ message: "Somthing went wrong" });
     }
-   }
+  }
 };
 
-exports.sendInvitationCard = async (req, res) => { 
-  let { guestName, guestNumber,_id } = req.body;
-   console.log("send sendInvitation Card hit", _id);
-   if (guestName) {
-    let generatedString = genRandString(10);
-    let url = `http://inho.in/navyday/${generatedString}` 
-    console.log("url", url)
+exports.sendReminder = async (req, res) => {
+  console.log("send reminder hit");
+  let { guestName, guestNumber, _id } = req.body;
+  let user = await addInvites.findOne({ _id });
+  if (user) {
+    console.log(user, "userrrrr");
+    let token = user.stringToken;
+    let url = `http://inho.in/confirmation/${token}`;
+    //let url = `http://localhost:3000/confirmation/${token} `;
     try {
       const options = {
         method: "POST",
@@ -107,43 +104,38 @@ exports.sendInvitationCard = async (req, res) => {
           guestNumber +
           '",\n      "depth": "' +
           guestName +
-          '",\n      "difference": "' +          
+          '",\n      "difference": "' +
           url +
           '"\n    }\n  ]\n}'
       );
       req.end();
-
-      // let sendInvitation = await guestList.save();
-      //  res.send({ message: "Guest details saved successfully" });
-      let user = await addInvites.findOne({ _id })
+      let user = await addInvites.findOne({ _id });
       if (user) {
-        user.invitationStatus = "Invitation Sent";
-        user.stringToken = generatedString ;
-        let updateEntry = await user.save()
-      }  
-      res.send({ message: "Invitation sent successfully" });
+        user.reminderStatus = "Reminder Sent";
+        let updateGuestDetails = await user.save();
+      }
+      res.send({ message: "Reminder sent successfully" });
     } catch (error) {
-      res.send({ message: "Somthing went wrong" });
+      res.send({ message: "Somthing went wrong in sending reminder" });
     }
-   }
+  }
 };
 
 exports.sendInvitationToAll = async (req, res) => {
-  let guestList  = [];
+  let guestList = [];
   guestList = req.body;
   if (guestList) {
     const recipients = [];
-   for (const item of guestList) {
+    for (const item of guestList) {
       recipients.push({
-        mobiles:`91${item.guestNumber}`,
-          depth:item.guestName,
-          difference:item.guestDesignation,
-        })
-   }
+        mobiles: `91${item.guestNumber}`,
+        depth: item.guestName,
+        difference: item.guestDesignation,
+      });
+    }
 
-
-  //  console.log("final arr",recipients);  
-      try {
+    //  console.log("final arr",recipients);
+    try {
       const options = {
         method: "POST",
         hostname: "api.msg91.com",
@@ -167,9 +159,11 @@ exports.sendInvitationToAll = async (req, res) => {
         });
       });
 
-     req.write(
-    '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": '+JSON.stringify(recipients)+'\n}'
-  );
+      req.write(
+        '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": ' +
+          JSON.stringify(recipients) +
+          "\n}"
+      );
       req.end();
       res.send({ message: "Invitation sent successfully" });
     } catch (error) {

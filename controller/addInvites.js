@@ -11,6 +11,7 @@ exports.addGuestList = async (req, res) => {
     guestCategory,
     guestAddress,
     invitationStatus,
+    reminderStatus,
     availability
   } = req.body;
 
@@ -23,6 +24,7 @@ exports.addGuestList = async (req, res) => {
     guestEmail == "" &&
     guestCategory == "" &&
     guestAddress == "" &&
+    reminderStatus == "" &&
     invitationStatus == "" && 
     availability == ""
   ) {
@@ -39,6 +41,7 @@ exports.addGuestList = async (req, res) => {
     guestCategory,
     guestAddress,
     invitationStatus,
+    reminderStatus,
     availability
   });
   try {
