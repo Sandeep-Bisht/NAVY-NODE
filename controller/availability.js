@@ -3,7 +3,7 @@ const addInvites = require("../models/invititionForm"); // Guest list table
 
 exports.verifyGuestByToken = async (req, res) => {
     let { stringToken } = req.query;
-    console.log("verifyGuestByToken stringToken", stringToken)
+    // console.log("verifyGuestByToken stringToken", stringToken)
     if( stringToken ) {
         let guest = await addInvites.findOne({ stringToken })    
     try {

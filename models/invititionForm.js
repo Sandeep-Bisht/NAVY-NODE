@@ -9,6 +9,7 @@ const invitationSchema = new Schema({
     guestOfficeNumber : { type : String, require : true },
     guestEmail : { type : String, require : true },
     invitationStatus : { type : String},
+    reminderStatus : { type : String },
     availability : { type : String },
     stringToken : { type : String},
     guestCategory : { type : String, require :true },
