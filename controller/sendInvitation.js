@@ -17,7 +17,7 @@ exports.sendInvitation = async (req, res) => {
   console.log("send Invitation hit", _id);
   if (guestName) {
     let generatedString = genRandString(10);
-     let url = `http://inho.in/navyday/${generatedString}`
+     let url = `http://inho.in/navyday/${generatedString} `
     //let url = `http://localhost:3000/navyday/${generatedString} `;
     try {
       const options = {
@@ -55,7 +55,7 @@ exports.sendInvitation = async (req, res) => {
       req.end();
       let user = await addInvites.findOne({ _id });
       if (user) {
-        user.invitationCard = "Invitation Sent";
+        user.invitationStatus = "Invitation Sent";
         user.stringToken = generatedString;
         let updateEntry = await user.save();
       }
@@ -73,7 +73,7 @@ exports.sendReminder = async (req, res) => {
   if (user) {
     console.log(user, "userrrrr");
     let token = user.stringToken;
-    let url = `http://inho.in/confirmation/${token}`;
+    let url = `http://inho.in/confirmation/${token} `;
     //let url = `http://localhost:3000/confirmation/${token} `;
     try {
       const options = {
