@@ -1,4 +1,5 @@
 let category = require("../models/category");
+const addInvites = require("../models/invititionForm");  // GUest list Table
 
 exports.createCategory = async (req, res) => {
   let data = new category(req.body)
@@ -46,3 +47,12 @@ exports.updateCategory = async(req, res) => {
 }
 
 
+exports.getGuestListByCategoryId = async(req, res) => {
+  try {
+      let response = await addInvites.find({guestCategory:req.params.id})
+      res.send(response)
+
+  } catch (error) {
+      res.send({ message: "Error occured while fetching categories" })
+  }
+}

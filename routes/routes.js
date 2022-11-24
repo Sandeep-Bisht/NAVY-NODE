@@ -8,7 +8,7 @@ const { getGuestList } = require("../controller/addInvites");
 const { sendInvitation, sendReminder } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
-const { createCategory, getCategories, updateCategory } = require('../controller/category.js');
+const { createCategory, getCategories, updateCategory, getGuestListByCategoryId } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
 const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
 // //const { handle404Route } = require('../controller/404')
@@ -23,9 +23,12 @@ router.get("/getGuestList", getGuestList);
 router.post("/sendInvitation", sendInvitation);
 router.post("/saveDepartment", createDepartment)
 router.post("/sendInvitationToAll", sendInvitationToAll);
+// Category api
 router.post("/sendReminder", sendReminder);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
+router.patch('/updatecategory', updateCategory)
+router.get('/getcategoryWiseGuestList/:id', getGuestListByCategoryId);
 // Dashboard Apis
 router.get('/getCartsCounts', getCartsCounts);
 router.get('/getCategoryUserCount', getCategoryUserCount);
@@ -38,7 +41,6 @@ router.get('/getDepartments', getDepartments);
 router.patch('/updateDepartment', updateDepartment)
 // End Department Api
 
-router.patch('/updatecategory', updateCategory)
 // //router.get('/*', handle404Route )
 
 module.exports = router;
