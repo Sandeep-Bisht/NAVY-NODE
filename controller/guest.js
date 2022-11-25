@@ -44,7 +44,7 @@ exports.deleteGuest = async(req, res) => {
     
   try {
       let response = await user.delete()
-      res.send(response)
+      res.json({ message: "guest deleted successfully" })
 
   } catch (error) {
       res.send({ errorMessage: "Error occured while deleting Guest" })
