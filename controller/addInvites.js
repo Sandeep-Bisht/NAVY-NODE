@@ -3,6 +3,7 @@ const addInvites = require("../models/invititionForm");  // GUest list Table
 exports.addGuestList = async (req, res) => {
   let {
     guestName,
+    inviteNo,
     guestDesignation,
     guestDepartment,
     guestNumber,
@@ -17,6 +18,7 @@ exports.addGuestList = async (req, res) => {
 
   if (
     guestName == "" &&
+    inviteNo == "" &&
     guestDesignation == "" &&
     guestDepartment == "" &&
     guestNumber == "" &&
@@ -33,6 +35,7 @@ exports.addGuestList = async (req, res) => {
 
   let guestList = new addInvites({
     guestName,
+    inviteNo,
     guestDesignation,
     guestDepartment,
     guestNumber,

@@ -1,23 +1,99 @@
 var jwt = require("jsonwebtoken");
-// let sendInvitation = require("../models/sendInvitation");
 const addInvites = require("../models/invititionForm");
 const http = require("https");
-
-// function generateAccessToken(userId) {
-//   return jwt.sign({ userId }, "6210607b75c134501baa290c", { expiresIn: '1800s' });
-// }
 const genRandString = (len) => {
   return Math.random()
     .toString(36)
     .substring(2, len + 2);
 };
 
-exports.sendInvitation = async (req, res) => {
-  let { guestName, guestDesignation, guestNumber, _id } = req.body;
-  console.log("send Invitation hit", _id);
+exports.sendPreInvitation = async (req, res) => {
+  let { guestName, guestNumber, _id } = req.body;
+  console.log("send pre Invitation hit", _id);
   if (guestName) {
     let generatedString = genRandString(10);
-     let url = `http://inho.in/navyday/${generatedString} `
+    let smsSend = async (status) => {
+      console.log("inside smsSend", status)
+      let response = JSON.parse(status)
+      let user = await addInvites.findOne({ _id });
+      if (response.type == "success") {
+        user.invitationStatus = "Invitation Sent";
+        user.stringToken = generatedString;
+        let updateEntry = await user.save();
+      }
+      res.send({ message: status });
+    };
+    let url = `prenavyday/${generatedString}`;
+    let payload = {
+      flow_id: "638052d56fe9b523b82cc816",
+      sender: "GIKSIN",
+      recipients: [
+        {
+          mobiles: `91${guestNumber}`,
+          link: url,
+        },
+      ],
+    };
+    try {
+      const options = {
+        method: "POST",
+        hostname: "api.msg91.com",
+        port: null,
+        path: "/api/v5/flow/",
+        headers: {
+          authkey: "223758APRHg1EMKR5b39f7a8",
+          "content-type": "application/json",
+        },
+      };
+      const req = http.request(options, function (res) {
+        const chunks = [];
+        res.on("data", function (chunk) {
+          chunks.push(chunk);
+        });
+
+        res.on("end", function () {
+          const body = Buffer.concat(chunks);
+          let msgResponse = body.toString();
+          if (msgResponse) {
+            smsSend(msgResponse);
+          }
+        });
+      });
+
+      req.write(JSON.stringify(payload));
+      req.end();      
+    } catch (error) {
+      res.send({ message: "Somthing went wrong in sending pre invitation card" });
+    }
+  }
+};
+
+exports.sendInvitation = async (req, res) => {
+  let { guestName, guestDesignation, guestNumber, _id } = req.body;
+  let generatedString = genRandString(10);
+  let smsSend = async (status) => {
+    let response = JSON.parse(status)
+    let user = await addInvites.findOne({ _id });
+    if (response.type == "success") {
+      user.invitationStatus = "Invitation Sent";
+      user.stringToken = generatedString;
+      let updateEntry = await user.save();
+    }
+    res.send({ message: status });
+  };
+
+  if (guestName) {
+    let url = `navyday/${generatedString}`;
+    let payload = {
+      flow_id: "638053361eb4a02e03621287",
+      sender: "GIKSIN",
+      recipients: [
+        {
+          mobiles: `91${guestNumber}`,
+          link: url,
+        },
+      ],
+    };
     //let url = `http://localhost:3000/navyday/${generatedString} `;
     try {
       const options = {
@@ -39,27 +115,15 @@ exports.sendInvitation = async (req, res) => {
 
         res.on("end", function () {
           const body = Buffer.concat(chunks);
-          console.log(body.toString(), "this is respopnse");
+          let msgResponse = body.toString();
+          if (msgResponse) {
+            smsSend(msgResponse);
+          }
         });
       });
-
-      req.write(
-        '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": [\n    {\n      "mobiles": "91' +
-          guestNumber +
-          '",\n      "depth": "' +
-          guestName +
-          '",\n      "difference": "' +
-          url +
-          '"\n    }\n  ]\n}'
-      );
+      req.write(JSON.stringify(payload));
       req.end();
-      let user = await addInvites.findOne({ _id });
-      if (user) {
-        user.invitationStatus = "Invitation Sent";
-        user.stringToken = generatedString;
-        let updateEntry = await user.save();
-      }
-      res.send({ message: "Invitation card sent successfully" });
+      
     } catch (error) {
       res.send({ message: "Somthing went wrong" });
     }
@@ -67,14 +131,24 @@ exports.sendInvitation = async (req, res) => {
 };
 
 exports.sendReminder = async (req, res) => {
-  console.log("send reminder hit");
-  let { guestName, guestNumber, _id } = req.body;
+  let { guestNumber, _id } = req.body;
   let user = await addInvites.findOne({ _id });
   if (user) {
-    console.log(user, "userrrrr");
     let token = user.stringToken;
-    let url = `http://inho.in/confirmation/${token} `;
-    //let url = `http://localhost:3000/confirmation/${token} `;
+    let url = `confirmation/${token}`;
+    
+    let payload = {
+      flow_id: "63805390fdcaca31bb765364",
+      sender: "GIKSIN",
+      recipients: [
+        {
+          "mobiles": `91${guestNumber}`,
+          "link": url,
+        },
+      ],
+    };
+
+
     try {
       const options = {
         method: "POST",
@@ -99,16 +173,9 @@ exports.sendReminder = async (req, res) => {
         });
       });
 
-      req.write(
-        '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": [\n    {\n      "mobiles": "91' +
-          guestNumber +
-          '",\n      "depth": "' +
-          guestName +
-          '",\n      "difference": "' +
-          url +
-          '"\n    }\n  ]\n}'
-      );
+      req.write(JSON.stringify(payload));
       req.end();
+      
       let user = await addInvites.findOne({ _id });
       if (user) {
         user.reminderStatus = "Reminder Sent";
@@ -171,25 +238,3 @@ exports.sendInvitationToAll = async (req, res) => {
     }
   }
 };
-
-// =============
-// =============
-
-// req.write(
-//     '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": '+JSON.stringify(recipients)+'\n}'
-//   );
-
-// const recipients = [{
-//     "mobiles":"919639156497",
-//     "depth":"Sandeep Bisht",
-//     "difference":"testing ",
-//   },
-//   {
-//     "mobiles":"917668992606",
-//     "depth":"Shubham Semwal",
-//     "difference":"testing 2",
-//   },]
-
-// ============
-
-// ============

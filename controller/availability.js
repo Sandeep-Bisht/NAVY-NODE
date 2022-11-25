@@ -17,11 +17,10 @@ exports.verifyGuestByToken = async (req, res) => {
 }
 
 exports.markAvailability = async (req, res) => {  
-    console.log('markAvailability hit', req.body)
     let { guest_response, _id} = req.body;
     let guest = await addInvites.findOne({ _id })     
     try {
-        console.log("inside try markAvailability", guest)
+        // console.log("inside try markAvailability", guest)
         if (guest) {
                 guest.availability = guest_response;
                 let updateEntry = await guest.save()
