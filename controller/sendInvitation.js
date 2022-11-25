@@ -17,7 +17,8 @@ exports.sendInvitation = async (req, res) => {
   console.log("send Invitation hit", _id);
   if (guestName) {
     let generatedString = genRandString(10);
-     let url = `http://inho.in/navyday/${generatedString} `
+     //let url = `http://inho.in/navyday/${generatedString} `
+     let url = `navyday/${generatedString}`;
     //let url = `http://localhost:3000/navyday/${generatedString} `;
     try {
       const options = {
@@ -44,11 +45,9 @@ exports.sendInvitation = async (req, res) => {
       });
 
       req.write(
-        '{\n  "flow_id": "61e14ff4571553440b2916e1",\n  "sender": "GIKSN",\n  "recipients": [\n    {\n      "mobiles": "91' +
+        '{\n  "flow_id": "638053361eb4a02e03621287",\n  "sender": "GIKSIN",\n  "recipients": [\n    {\n      "mobiles": "91' +
           guestNumber +
-          '",\n      "depth": "' +
-          guestName +
-          '",\n      "difference": "' +
+          '",\n  "link": "' +
           url +
           '"\n    }\n  ]\n}'
       );
