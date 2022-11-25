@@ -5,12 +5,13 @@ const { getUsers } = require("../controller/adminAuth.js");
 const { userRregistration } = require("../controller/registration.js")
 const { addGuestList } = require("../controller/addInvites");
 const { getGuestList } = require("../controller/addInvites");
-const { sendInvitation, sendReminder } = require("../controller/sendInvitation.js");
+const { sendInvitation, sendReminder, sendPreInvitation } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory, getGuestListByCategoryId } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
-const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
+const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js');
+const { markAttendance } = require("../controller/attendanceMaster.js");
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -21,8 +22,10 @@ router.get("/verifyGuestByToken", verifyGuestByToken)
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
 router.post("/sendInvitation", sendInvitation);
-router.post("/saveDepartment", createDepartment)
+router.post("/markAttendance", markAttendance);
+router.post("/saveDepartment", createDepartment);
 router.post("/sendInvitationToAll", sendInvitationToAll);
+router.post("/sendPreInvitation", sendPreInvitation);
 // Category api
 router.post("/sendReminder", sendReminder);
 router.post("/createcategory", createCategory);
