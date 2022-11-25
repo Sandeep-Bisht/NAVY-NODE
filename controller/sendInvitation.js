@@ -13,6 +13,7 @@ exports.sendPreInvitation = async (req, res) => {
   if (guestName) {
     let generatedString = genRandString(10);
     let smsSend = async (status) => {
+      console.log("inside smsSend", status)
       let response = JSON.parse(status)
       let user = await addInvites.findOne({ _id });
       if (response.type == "success") {
@@ -60,14 +61,7 @@ exports.sendPreInvitation = async (req, res) => {
       });
 
       req.write(JSON.stringify(payload));
-      req.end();
-      let user = await addInvites.findOne({ _id });
-      if (user) {
-        user.invitationStatus = "Invitation Sent";
-        user.stringToken = generatedString;
-        let updateEntry = await user.save();
-      }
-      res.send({ message: "Pre Invitation card sent successfully" });
+      req.end();      
     } catch (error) {
       res.send({ message: "Somthing went wrong in sending pre invitation card" });
     }
