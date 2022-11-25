@@ -11,6 +11,7 @@ const { markAvailability, verifyGuestByToken } = require("../controller/availabi
 const { createCategory, getCategories, updateCategory, getGuestListByCategoryId } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
 const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
+const { updateGuest , deleteGuest } = require('../controller/guest.js')
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -40,6 +41,11 @@ router.post("/createDepartment", createDepartment);
 router.get('/getDepartments', getDepartments);
 router.patch('/updateDepartment', updateDepartment)
 // End Department Api
+
+// Guest Update APi
+router.post("/updateGuest", updateGuest);
+router.post('/deleteGuest', deleteGuest);
+// End Api
 
 // //router.get('/*', handle404Route )
 
