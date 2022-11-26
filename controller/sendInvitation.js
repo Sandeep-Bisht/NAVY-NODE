@@ -8,63 +8,66 @@ const genRandString = (len) => {
 };
 
 exports.sendPreInvitation = async (req, res) => {
-  let { guestName, guestNumber, _id } = req.body;
+  let { guestName, guestNumber, _id, stringToken } = req.body;
   console.log("send pre Invitation hit", _id);
-  if (guestName) {
-    let generatedString = genRandString(10);
-    let smsSend = async (status) => {
-      console.log("inside smsSend", status)
-      let response = JSON.parse(status)
-      let user = await addInvites.findOne({ _id });
-      if (response.type == "success") {
-        user.invitationStatus = "Invitation Sent";
-        user.stringToken = generatedString;
-        let updateEntry = await user.save();
-      }
-      res.send({ message: status });
-    };
-    let url = `prenavyday/${generatedString}`;
-    let payload = {
-      flow_id: "638052d56fe9b523b82cc816",
-      sender: "GIKSIN",
-      recipients: [
-        {
-          mobiles: `91${guestNumber}`,
-          link: url,
-        },
-      ],
-    };
-    try {
-      const options = {
-        method: "POST",
-        hostname: "api.msg91.com",
-        port: null,
-        path: "/api/v5/flow/",
-        headers: {
-          authkey: "223758APRHg1EMKR5b39f7a8",
-          "content-type": "application/json",
-        },
-      };
-      const req = http.request(options, function (res) {
-        const chunks = [];
-        res.on("data", function (chunk) {
-          chunks.push(chunk);
-        });
+  let user = await addInvites.findOne({ _id });
+  if (user.stringToken && user.stringToken == stringToken) {
+    var generatedString = user.stringToken;
+  } else {
+    var generatedString = genRandString(10);
+  }
 
-        res.on("end", function () {
-          const body = Buffer.concat(chunks);
-          let msgResponse = body.toString();
-          if (msgResponse) {
-            smsSend(msgResponse);
-          }
-        });
+  let smsSend = async (status) => {
+    let response = JSON.parse(status);
+    let user = await addInvites.findOne({ _id });
+    if (response.type == "success") {
+      user.invitationStatus = "Invitation Sent";
+      user.stringToken = generatedString;
+      let updateEntry = await user.save();
+    }
+    res.send({ message: status });
+  };
+  let url = `prenavyday/${generatedString}`;
+  let payload = {
+    flow_id: "638052d56fe9b523b82cc816",
+    sender: "GIKSIN",
+    recipients: [
+      {
+        mobiles: `91${guestNumber}`,
+        link: url,
+      },
+    ],
+  };
+  try {
+    const options = {
+      method: "POST",
+      hostname: "api.msg91.com",
+      port: null,
+      path: "/api/v5/flow/",
+      headers: {
+        authkey: "223758APRHg1EMKR5b39f7a8",
+        "content-type": "application/json",
+      },
+    };
+    const req = http.request(options, function (res) {
+      const chunks = [];
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
       });
 
-      req.write(JSON.stringify(payload));
-      req.end();      
-    } catch (error) {
-      res.send({ message: "Somthing went wrong in sending pre invitation card" });
-    }
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        let msgResponse = body.toString();
+        if (msgResponse) {
+          smsSend(msgResponse);
+        }
+      });
+    });
+
+    req.write(JSON.stringify(payload));
+    req.end();
+  } catch (error) {
+    res.send({ message: "Somthing went wrong in sending pre invitation card" });
   }
 };
 
@@ -72,7 +75,7 @@ exports.sendInvitation = async (req, res) => {
   let { guestName, guestDesignation, guestNumber, _id } = req.body;
   let generatedString = genRandString(10);
   let smsSend = async (status) => {
-    let response = JSON.parse(status)
+    let response = JSON.parse(status);
     let user = await addInvites.findOne({ _id });
     if (response.type == "success") {
       user.invitationStatus = "Invitation Sent";
@@ -123,7 +126,6 @@ exports.sendInvitation = async (req, res) => {
       });
       req.write(JSON.stringify(payload));
       req.end();
-      
     } catch (error) {
       res.send({ message: "Somthing went wrong" });
     }
@@ -133,21 +135,31 @@ exports.sendInvitation = async (req, res) => {
 exports.sendReminder = async (req, res) => {
   let { guestNumber, _id } = req.body;
   let user = await addInvites.findOne({ _id });
+  let smsSend = async (status) => {
+    let response = JSON.parse(status);
+    let user = await addInvites.findOne({ _id });
+    if (response.type == "success") {
+      user.reminderStatus = "Reminder Sent";
+      let updateEntry = await user.save();
+      res.send({ message: status });
+    } else {
+      res.send({ message: status });
+    }
+  };
   if (user) {
     let token = user.stringToken;
     let url = `confirmation/${token}`;
-    
+
     let payload = {
       flow_id: "63805390fdcaca31bb765364",
       sender: "GIKSIN",
       recipients: [
         {
-          "mobiles": `91${guestNumber}`,
-          "link": url,
+          mobiles: `91${guestNumber}`,
+          link: url,
         },
       ],
     };
-
 
     try {
       const options = {
@@ -169,19 +181,15 @@ exports.sendReminder = async (req, res) => {
 
         res.on("end", function () {
           const body = Buffer.concat(chunks);
-          console.log(body.toString(), "this is respopnse");
+          let msgResponse = body.toString();
+          if (msgResponse) {
+            smsSend(msgResponse);
+          }
         });
       });
 
       req.write(JSON.stringify(payload));
       req.end();
-      
-      let user = await addInvites.findOne({ _id });
-      if (user) {
-        user.reminderStatus = "Reminder Sent";
-        let updateGuestDetails = await user.save();
-      }
-      res.send({ message: "Reminder sent successfully" });
     } catch (error) {
       res.send({ message: "Somthing went wrong in sending reminder" });
     }
