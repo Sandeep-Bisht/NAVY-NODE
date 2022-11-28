@@ -8,7 +8,7 @@ const attendanceMasterSchema = new Schema({
     guestNumber : { type : String, require : true }, 
     guestCategory : { type : String, require :true },
     guestDepartment : { type : String, require :true },
-    attendentDate : { type : String, require : true }
+    attendentDate : { type : Array, require : true }
 
 }, {timestamp : true}
 )
