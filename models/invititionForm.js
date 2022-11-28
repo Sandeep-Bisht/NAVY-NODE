@@ -10,9 +10,12 @@ const invitationSchema = new Schema({
     guestOfficeNumber : { type : String },
     guestEmail : { type : String},
     invitationStatus : { type : String},
+    preInvitation : { type : String },
+    navydayInvitation : { type : String },
     reminderStatus : { type : String },
     availability : { type : String },
     stringToken : { type : String, unique : true },
+    attendentDate : { type : Array, require : true },
     guestCategory : { type : String, require :true },
 
 }, {timestamp : true}

@@ -22,12 +22,15 @@ exports.sendPreInvitation = async (req, res) => {
     let user = await addInvites.findOne({ _id });
     if (response.type == "success") {
       user.invitationStatus = "Invitation Sent";
+      user.preInvitation = "Yes"
       user.stringToken = generatedString;
       let updateEntry = await user.save();
     }
     res.send({ message: status });
   };
   let url = `prenavyday/${generatedString}`;
+  //let url = `http://localhost:3000/prenavyday/${generatedString} `;
+
   let payload = {
     flow_id: "638052d56fe9b523b82cc816",
     sender: "GIKSIN",
@@ -72,13 +75,20 @@ exports.sendPreInvitation = async (req, res) => {
 };
 
 exports.sendInvitation = async (req, res) => {
-  let { guestName, guestDesignation, guestNumber, _id } = req.body;
-  let generatedString = genRandString(10);
+  console.log("navi day invitation hit")
+  let { guestName, guestDesignation, guestNumber, _id, stringToken} = req.body;
+  let user = await addInvites.findOne({ _id });
+  if (user.stringToken && user.stringToken == stringToken) {
+    var generatedString = user.stringToken;
+  } else {
+    var generatedString = genRandString(10);
+  }
   let smsSend = async (status) => {
     let response = JSON.parse(status);
     let user = await addInvites.findOne({ _id });
     if (response.type == "success") {
       user.invitationStatus = "Invitation Sent";
+      user.navydayInvitation = "Yes";
       user.stringToken = generatedString;
       let updateEntry = await user.save();
     }
