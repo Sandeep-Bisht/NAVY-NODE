@@ -1,12 +1,11 @@
 const markAttendance = require("../models/attendanceMaster"); // Attendance list list Table
 
-
-exports.markAttendance = async (req, res) => {  
+exports.markAttendance = async (req, res) => {
   let uniqueKey = "12345";
   let {
+    guestId,
     guestName,
     inviteNo,
-    guestDesignation,
     guestDepartment,
     guestNumber,
     guestCategory,
@@ -14,53 +13,39 @@ exports.markAttendance = async (req, res) => {
     adminPassword,
   } = req.body;
 
-  console.log(attendentDate, "date from form")
-
   if (uniqueKey == adminPassword) {
-    // let response = await markAttendance.find({inviteNo}).count();
-    // if (response != 0) {
-      let response = await markAttendance.find({inviteNo})
-    // if (response && response.attendentDate && response.attendentDate == attendentDate ) {
-    //   res.send({ message: "Attendance marked already" });
-    // } else {
-    //   let presentGuest = new markAttendance({
-    //     guestName,
-    //     inviteNo,
-    //     guestDesignation,
-    //     guestDepartment,
-    //     guestNumber,
-    //     guestCategory,
-    //     attendentDate,
-    //   });
-    //   try {
-    //     let markAttendance = await presentGuest.save();
-    //     res.send({ message: "Guest attendance marked successfully" });
-    //     console.log("attandance marked");
-    //   } catch (error) {
-    //     res.send({
-    //       message: "Somthing went wrong while marking attendance",
-    //       error,
-    //     });
-    //   }
-    // }
-    let presentGuest = new markAttendance({
+    // let response = await markAttendance.find({ guestId, attendentDate:'11/30/2022' } );
+    let response = await markAttendance.find({
+      $and: [
+        {guestId},
+        {attendentDate}
+      ]
+    })
+    if (response.length == 0) {      
+        let nextDayPresent = new markAttendance({
           guestName,
+          guestId,
           inviteNo,
-          guestDesignation,
           guestDepartment,
           guestNumber,
           guestCategory,
           attendentDate,
         });
         try {
-          let markAttendance = await presentGuest.save();
+          let markAttendance = await nextDayPresent.save();
           res.send({ message: "Guest attendance marked successfully" });
+          // console.log("attandance marked");
         } catch (error) {
           res.send({
-            message: "Somthing went wrong while marking attendance",
-            error,
+            message: "gone Somthing went wrong while marking attendance",
+            error,            
           });
+          // console.log(error, "error in catch")
         }
+      // }
+    } else {  
+      res.send({ message: "Attendance marked already" });
+    }
   } else {
     res.send({ message: "You can't mark guest attendance" });
   }

@@ -14,17 +14,6 @@ mongoose.connect(process.env.db_url, {
     console.log("inside catch", err)
 })
 
-// const mongoose =require('mongoose')
-// require('dotenv').config()
-// module.exports = function(){
-//     mongoose.connect(process.env.db_url, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useCreateIndex: true,
-//         useFindAndModify: true,})
-//     mongoose.connection.on('connected',()=>{
-//         console.log("Database is connected ")
-//     })
-// }
+
 
 
