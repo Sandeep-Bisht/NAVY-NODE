@@ -9,7 +9,6 @@ const genRandString = (len) => {
 
 exports.sendPreInvitation = async (req, res) => {
   let { guestName, guestNumber, _id, stringToken } = req.body;
-  console.log("send pre Invitation hit", _id);
   let user = await addInvites.findOne({ _id });
   if (user.stringToken && user.stringToken == stringToken) {
     var generatedString = user.stringToken;
@@ -75,7 +74,6 @@ exports.sendPreInvitation = async (req, res) => {
 };
 
 exports.sendInvitation = async (req, res) => {
-  console.log("navi day invitation hit")
   let { guestName, guestDesignation, guestNumber, _id, stringToken} = req.body;
   let user = await addInvites.findOne({ _id });
   if (user.stringToken && user.stringToken == stringToken) {

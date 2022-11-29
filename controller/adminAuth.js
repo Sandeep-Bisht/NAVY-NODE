@@ -17,7 +17,6 @@ exports.getUsers = async (req, res) => {
       // if(user.userEmail.trim().toLowerCase() == userEmail.trim().toLowerCase() &&
       // user.password.trim().toLowerCase() == password.trim().toLowerCase()) {
       if (user.userEmail == userEmail && user.userPassword == password) {
-        console.log(user, "search reasult inside ");
         let token = generateAccessToken({ user });
         res.send({ token, message: "Logged in successfully" });
       } else {
