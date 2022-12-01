@@ -58,3 +58,31 @@ exports.getConfirmationCount = async(req, res) => {
 
     res.send({response, message:"Request completed successfully"})
 }
+
+exports.getConfirmationGuest = async(req, res) => {
+    // let pendingCount = await addInvites.find({availability:"null"})
+    // let regretCount =  await addInvites.find({availability:"no"})
+    let guestList =  await addInvites.find({availability:"yes"})
+
+    // let response = [{
+    //     type: "pending",
+    //     counter: parseInt(pendingCount),
+    // },
+    // {
+    //     type: "confirm",
+    //     counter: parseInt(confirmCount),
+
+    // },
+    // {
+    //     type: "regret",
+    //     counter: parseInt(regretCount),
+
+    // }
+    // ]
+    if(guestList) {
+        res.send({guestList, message:"Request completed successfully"})
+
+    } else {
+        res.send({message:"Something went wrong"})
+    }    
+}
