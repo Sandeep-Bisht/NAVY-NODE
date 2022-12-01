@@ -9,7 +9,7 @@ const { sendInvitation, sendReminder, sendPreInvitation } = require("../controll
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory, getGuestListByCategoryId } = require('../controller/category.js');
-const { getCartsCounts , getCategoryUserCount , getConfirmationCount } = require('../controller/dashboardapi.js')
+const { getCartsCounts , getCategoryUserCount , getConfirmationCount, getConfirmationGuest } = require('../controller/dashboardapi.js')
 const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
 const { markAttendance } = require("../controller/attendanceMaster.js");
@@ -37,6 +37,8 @@ router.get('/getcategoryWiseGuestList/:id', getGuestListByCategoryId);
 router.get('/getCartsCounts', getCartsCounts);
 router.get('/getCategoryUserCount', getCategoryUserCount);
 router.get('/getConfirmationCount', getConfirmationCount);
+router.get('/getConfirmationGuest', getConfirmationGuest);
+
 // Dashboard APi End
 
 // Department APi
