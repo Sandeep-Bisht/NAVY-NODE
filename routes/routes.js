@@ -37,7 +37,7 @@ router.get('/getcategoryWiseGuestList/:id', getGuestListByCategoryId);
 router.get('/getCartsCounts', getCartsCounts);
 router.get('/getCategoryUserCount', getCategoryUserCount);
 router.get('/getConfirmationCount', getConfirmationCount);
-router.get('/getConfirmationGuest', getConfirmationGuest);
+router.get('/getConfirmationGuest/:id', getConfirmationGuest);
 
 // Dashboard APi End
 

@@ -62,8 +62,36 @@ exports.getConfirmationCount = async(req, res) => {
 exports.getConfirmationGuest = async(req, res) => {
     // let pendingCount = await addInvites.find({availability:"null"})
     // let regretCount =  await addInvites.find({availability:"no"})
-    let guestList =  await addInvites.find({availability:"yes"})
+    // let guestList =  await addInvites.find({availability:"yes"})
+    let guestList = await addInvites.find()
+    let navyDayGuestList = await addInvites.find({
+        $and: [
+          {availability:"yes"},
+          {navydayInvitation:"Yes"}
+        ]
+      })
 
+      let preNavydayGuestList = await addInvites.find({
+        $and: [
+          {availability:"yes"},
+          {preInvitation:"Yes"}
+        ]
+      })
+
+      
+
+
+if(req.params.id == 'navyday'){
+    guestList = [...navyDayGuestList]
+}
+
+if(req.params.id == 'prenavyday'){
+    guestList =  [...preNavydayGuestList]
+}
+    
+
+    
+    
     // let response = [{
     //     type: "pending",
     //     counter: parseInt(pendingCount),
