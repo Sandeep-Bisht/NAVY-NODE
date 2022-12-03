@@ -15,6 +15,7 @@ app.use('/api', routes)
 const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`server is runningss on PORTs ${PORT}`)
+  
 })
 mongoose.connect(
   process.env.MONGO_URL,
@@ -24,6 +25,8 @@ mongoose.connect(
     useCreateIndex: true,
   },
   () => {
-    console.log("mongdb is connected");
+    console.log("mongdb is connected");    
   }
 );
+
+
