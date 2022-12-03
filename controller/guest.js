@@ -50,3 +50,4 @@ exports.deleteGuest = async(req, res) => {
       res.send({ errorMessage: "Error occured while deleting Guest" })
   }
 }
+

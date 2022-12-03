@@ -33,20 +33,20 @@ exports.markAttendance = async (req, res) => {
         });
         try {
           let markAttendance = await nextDayPresent.save();
-          res.send({ message: "Guest attendance marked successfully" });
+          res.send({ message: "Thankyou for your presence" });
           // console.log("attandance marked");
         } catch (error) {
           res.send({
-            message: "gone Somthing went wrong while marking attendance",
+            message: "Network Issue",
             error,            
           });
           // console.log(error, "error in catch")
         }
       // }
     } else {  
-      res.send({ message: "Attendance marked already" });
+      res.status(400).send({ message: "Record already updated." });
     }
   } else {
-    res.send({ message: "You can't mark guest attendance" });
+    res.status(401).send({ message: "Only Admin can mark attendance" });
   }
 };
