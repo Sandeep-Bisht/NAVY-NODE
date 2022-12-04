@@ -12,7 +12,7 @@ const { createCategory, getCategories, updateCategory, getGuestListByCategoryId 
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount, getConfirmationGuest } = require('../controller/dashboardapi.js')
 const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
-const { markAttendance } = require("../controller/attendanceMaster.js");
+const { markAttendance, getPresentGuestList } = require("../controller/attendanceMaster.js");
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -22,6 +22,7 @@ router.post("/markAvailability", markAvailability);
 router.get("/verifyGuestByToken", verifyGuestByToken)
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
+router.get("/getPresentGuestList", getPresentGuestList);
 router.post("/sendInvitation", sendInvitation);
 router.post("/markAttendance", markAttendance);
 router.post("/saveDepartment", createDepartment);
