@@ -50,3 +50,19 @@ exports.markAttendance = async (req, res) => {
     res.status(401).send({ message: "Only Admin can mark attendance" });
   }
 };
+
+exports.getPresentGuestList = async (req, res) => {
+   console.log("getpresentGuestList")
+  try {
+      let response = await markAttendance.find()
+      // console.log(response,'res')
+      if(response){
+          res.send(response)
+      } else {
+          res.send({message : "No Record found"})
+      }
+      
+  } catch (error) {
+      res.send({ message: "Error occured while fetching guest list" })
+  }
+}
