@@ -1,7 +1,7 @@
 const markAttendance = require("../models/attendanceMaster"); // Attendance list list Table
 
 exports.markAttendance = async (req, res) => {
-  let uniqueKey = "12345";
+  let uniqueKey = "111";
   let {
     guestId,
     guestName,
