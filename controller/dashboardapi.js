@@ -1,4 +1,6 @@
 const addInvites = require("../models/invititionForm");
+const PresentGuestList = require("../models/attendanceMaster"); // Attendance list list Table
+
 let category = require("../models/category");
 
 exports.getCartsCounts = async(req, res) => {
@@ -76,9 +78,7 @@ exports.getConfirmationGuest = async(req, res) => {
           {availability:"yes"},
           {preInvitation:"Yes"}
         ]
-      })
-
-      
+      })   
 
 
 if(req.params.id == 'navyday'){
@@ -88,7 +88,6 @@ if(req.params.id == 'navyday'){
 if(req.params.id == 'prenavyday'){
     guestList =  [...preNavydayGuestList]
 }
-    
 
     
     
@@ -107,6 +106,44 @@ if(req.params.id == 'prenavyday'){
 
     // }
     // ]
+    if(guestList) {
+        res.send({guestList, message:"Request completed successfully"})
+
+    } else {
+        res.send({message:"Something went wrong"})
+    }    
+}
+
+exports.getPresentGuest = async(req, res) => {    
+    console.log("getPresentGuest hit")
+    let guestList = await PresentGuestList.find()    
+    let navyDayGuestList = await PresentGuestList.find({
+        attendentDate : "12/4/2022"
+        // $and: [
+        //   {availability:"yes"},
+        //   {navydayInvitation:"Yes"}
+        // ]
+        
+      })
+      console.log("getPresentGuest hit list", navyDayGuestList)
+
+      let preNavydayGuestList = await PresentGuestList.find({
+        attendentDate : "12/3/2022"
+        // $and: [
+        //   {availability:"yes"},
+        //   {preInvitation:"Yes"}
+        // ]
+      })   
+
+
+if(req.params.id == 'navyday'){
+    guestList = [...navyDayGuestList]
+}
+
+if(req.params.id == 'prenavyday'){
+    guestList =  [...preNavydayGuestList]
+}
+
     if(guestList) {
         res.send({guestList, message:"Request completed successfully"})
 
