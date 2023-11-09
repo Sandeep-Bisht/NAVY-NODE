@@ -25,7 +25,10 @@ exports.createCategory = async (req, res) => {
 exports.getCategories = async(req, res) => {
     try {
         let response = await category.find()
-        res.send({response, message:"Request completed successfully"})
+        res.send({
+          response, 
+          message:"Request completed successfully"
+        })
 
     } catch (error) {
         res.send({ message: "Error occured while fetching categories" })

@@ -12,6 +12,7 @@ const invitationSchema = new Schema({
     invitationStatus : { type : String},
     preInvitation : { type : String },
     navydayInvitation : { type : String },
+    diwaliInvitation : { type : String },
     reminderStatus : { type : String },
     availability : { type : String },
     stringToken : { type : String, unique : true },

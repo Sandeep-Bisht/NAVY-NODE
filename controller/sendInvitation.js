@@ -140,6 +140,67 @@ exports.sendInvitation = async (req, res) => {
   }
 };
 
+exports.sendFestivalWishes = async (req, res) => {
+  let { guestName, guestDesignation, guestNumber, _id, stringToken} = req.body;
+  let user = await addInvites.findOne({ _id });
+
+  let smsSend = async (status) => {
+    let response = JSON.parse(status);
+    let user = await addInvites.findOne({ _id });
+    if (response.type == "success") {
+      user.invitationStatus = "Invitation Sent";
+      user.diwaliInvitation = "Yes";
+      let updateEntry = await user.save();
+    }
+    res.send({ message: status });
+  };
+
+
+  if (guestName) {
+    // let url = `navyday/${generatedString}`;
+    let payload = {
+      flow_id: "654c8368204b1c131c7bfa93",
+      sender: "NHODDN",
+      recipients: [
+        {
+          mobiles: `91${guestNumber}`,
+        },
+      ],
+    };
+    try {
+      const options = {
+        method: "POST",
+        hostname: "api.msg91.com",
+        port: null,
+        path: "/api/v5/flow/",
+        headers: {
+          authkey: "223758APRHg1EMKR5b39f7a8", 
+          "content-type": "application/json",
+        },
+      };
+
+      const req = http.request(options, function (res) {
+        const chunks = [];
+        res.on("data", function (chunk) {
+          chunks.push(chunk);
+        });
+
+        res.on("end", function () {
+          const body = Buffer.concat(chunks);
+          let msgResponse = body.toString();
+          if (msgResponse) {
+            smsSend(msgResponse);
+          }
+        });
+      });
+      req.write(JSON.stringify(payload));
+      req.end();
+    } catch (error) {
+      res.send({ message: "Somthing went wrong" });
+    }
+  }
+};
+
 exports.sendReminder = async (req, res) => {
   let { guestNumber, _id } = req.body;
   let user = await addInvites.findOne({ _id });
@@ -217,7 +278,6 @@ exports.sendInvitationToAll = async (req, res) => {
       });
     }
 
-    //  console.log("final arr",recipients);
     try {
       const options = {
         method: "POST",

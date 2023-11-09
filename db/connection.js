@@ -13,7 +13,3 @@ mongoose.connect(process.env.db_url, {
 }).catch((err) => {
     console.log("inside catch", err)
 })
-
-
-
-
