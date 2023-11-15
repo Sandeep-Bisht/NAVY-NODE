@@ -159,7 +159,7 @@ exports.sendFestivalWishes = async (req, res) => {
   if (guestName) {
     // let url = `navyday/${generatedString}`;
     let payload = {
-      flow_id: "654c8368204b1c131c7bfa93",
+      flow_id: "654dc559e59c1a4d237a2222",
       sender: "NHODDN",
       recipients: [
         {
