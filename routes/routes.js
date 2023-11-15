@@ -8,9 +8,9 @@ const { getGuestList } = require("../controller/addInvites");
 const { sendInvitation, sendReminder, sendPreInvitation, sendFestivalWishes  } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
-const { createCategory, getCategories, updateCategory, getGuestListByCategoryId } = require('../controller/category.js');
+const { createCategory, getCategories, updateCategory, getGuestListByCategoryId, deleteCategoryById } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount, getConfirmationGuest, getPresentGuest } = require('../controller/dashboardapi.js')
-const { createDepartment , getDepartments , updateDepartment } = require('../controller/department.js')
+const { createDepartment , getDepartments , updateDepartment, deleteDepartmentById } = require('../controller/department.js')
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
 const { markAttendance, getPresentGuestList } = require("../controller/attendanceMaster.js");
 // //const { handle404Route } = require('../controller/404')
@@ -35,12 +35,14 @@ router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
 router.patch('/updatecategory', updateCategory)
 router.get('/getcategoryWiseGuestList/:id', getGuestListByCategoryId);
+router.post('/deleteCategoryById', deleteCategoryById )
 // Dashboard Apis
 router.get('/getCartsCounts', getCartsCounts);
 router.get('/getCategoryUserCount', getCategoryUserCount);
 router.get('/getConfirmationCount', getConfirmationCount);
 router.get('/getConfirmationGuest/:id', getConfirmationGuest);
 router.get('/getPresentGuest/:id', getPresentGuest);
+router.post('/deleteDepartmentById', deleteDepartmentById)
 
 
 // Dashboard APi End

@@ -57,3 +57,23 @@ exports.updateDepartment = async(req, res) => {
   }
 
 
+
+exports.deleteDepartmentById = async(req, res) => {
+  
+  let {id} = req.body
+  console.log("inside delete Department" , id)
+  let departmentData = await department.findById(id)
+  
+try {
+    let response = await departmentData.delete();
+    if(response){
+      res.json({ message: "Department deleted successfully" })
+    }   
+
+} catch (error) {
+    res.send({ errorMessage: "Error occured while deleting Department" })
+}
+}
+
+
+

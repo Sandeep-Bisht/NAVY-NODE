@@ -59,3 +59,20 @@ exports.getGuestListByCategoryId = async(req, res) => {
       res.send({ message: "Error occured while fetching categories" })
   }
 }
+
+exports.deleteCategoryById = async(req, res) => {
+  
+  let {id} = req.body
+  console.log("inside delete cateory" , id)
+  let categories = await category.findById(id)
+  
+try {
+    let response = await categories.delete();
+    if(response){
+      res.json({ message: "Category deleted successfully" })
+    }   
+
+} catch (error) {
+    res.send({ errorMessage: "Error occured while deleting Category" })
+}
+}
