@@ -31,8 +31,8 @@ exports.sendPreInvitation = async (req, res) => {
   //let url = `http://localhost:3000/prenavyday/${generatedString} `;
 
   let payload = {
-    flow_id: "638052d56fe9b523b82cc816",
-    sender: "GIKSIN",
+    flow_id: "655c5869491a537323022568",
+    sender: "NHODDN",
     recipients: [
       {
         mobiles: `91${guestNumber}`,
@@ -96,8 +96,8 @@ exports.sendInvitation = async (req, res) => {
   if (guestName) {
     let url = `navyday/${generatedString}`;
     let payload = {
-      flow_id: "638053361eb4a02e03621287",
-      sender: "GIKSIN",
+      flow_id: "655c5897261de1502e2059f3",
+      sender: "NHODDN",
       recipients: [
         {
           mobiles: `91${guestNumber}`,
@@ -220,8 +220,8 @@ exports.sendReminder = async (req, res) => {
     let url = `confirmation/${token}`;
 
     let payload = {
-      flow_id: "63805390fdcaca31bb765364",
-      sender: "GIKSIN",
+      flow_id: "655c57eb261de1502e2059f2",
+      sender: "NHODDN",
       recipients: [
         {
           mobiles: `91${guestNumber}`,
