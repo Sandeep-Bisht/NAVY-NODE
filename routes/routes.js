@@ -14,6 +14,7 @@ const { createDepartment , getDepartments , updateDepartment, deleteDepartmentBy
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
 const { markAttendance, getPresentGuestList } = require("../controller/attendanceMaster.js");
 // //const { handle404Route } = require('../controller/404')
+const { downloadGuestList } = require("../controller/downloadGuestList.js")
 
 
 router.post("/getuser", getUsers);
@@ -43,6 +44,9 @@ router.get('/getConfirmationCount', getConfirmationCount);
 router.get('/getConfirmationGuest/:id', getConfirmationGuest);
 router.get('/getPresentGuest/:id', getPresentGuest);
 router.post('/deleteDepartmentById', deleteDepartmentById)
+
+//download excel
+// router.get('/downloadGuestData', downloadGuestList)
 
 
 // Dashboard APi End
