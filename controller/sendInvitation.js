@@ -27,7 +27,7 @@ exports.sendPreInvitation = async (req, res) => {
     }
     res.send({ message: status });
   };
-  let url = `prenavyday/${generatedString}`;
+  let url = `http://inho.in/prenavyday/${generatedString}`;
   //let url = `http://localhost:3000/prenavyday/${generatedString} `;
 
   let payload = {
@@ -94,7 +94,7 @@ exports.sendInvitation = async (req, res) => {
   };
 
   if (guestName) {
-    let url = `navyday/${generatedString}`;
+    let url = `http://inho.in/navyday/${generatedString}`;
     let payload = {
       flow_id: "655c5897261de1502e2059f3",
       sender: "NHODDN",
@@ -217,7 +217,7 @@ exports.sendReminder = async (req, res) => {
   };
   if (user) {
     let token = user.stringToken;
-    let url = `confirmation/${token}`;
+    let url = `http://inho.in/confirmation/${token}`;
 
     let payload = {
       flow_id: "655c57eb261de1502e2059f2",
