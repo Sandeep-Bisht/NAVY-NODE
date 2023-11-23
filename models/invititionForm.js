@@ -18,6 +18,8 @@ const invitationSchema = new Schema({
     stringToken : { type : String, unique : true },
     attendentDate : { type : Array, require : true },
     guestCategory : { type : String, require :true },
+    invitedForNavyDay:{ type : Boolean },
+    invitedForPreNavyDay:{ type : Boolean },
 
 }, {timestamp : true}
 )
