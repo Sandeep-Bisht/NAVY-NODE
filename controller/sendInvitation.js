@@ -13,7 +13,7 @@ exports.sendPreInvitation = async (req, res) => {
   if (user.stringToken && user.stringToken == stringToken) {
     var generatedString = user.stringToken;
   } else {
-    var generatedString = genRandString(10);
+    var generatedString = genRandString(4);
   }
 
   let smsSend = async (status) => {
