@@ -7,14 +7,16 @@ function generateAccessToken(user) {
 
 exports.getUsers = async (req, res) => {
   let { useremail, password } = req.body;
+  // console.log("inside het user", useremail, "password", password)
   if (!useremail  || !password ) {
     return res.send({ message: "Please fill the fields" });
   }
-  let user = await registration.findOne({ useremail });
+  let user = await registration.findOne({ userEmail : useremail });
+  // console.log("userrrrr", user)
   try {
     if (user) {
-      // if(user.userEmail.trim().toLowerCase() == userEmail.trim().toLowerCase() &&
-      // user.password.trim().toLowerCase() == password.trim().toLowerCase()) {
+      if(user.userEmail.trim().toLowerCase() == useremail.trim().toLowerCase() &&
+      user.password.trim().toLowerCase() == password.trim().toLowerCase()) {
       if (user.userEmail == useremail && user.password == password) {
         let token = generateAccessToken({ user });
         res.send({ token, message: "Logged in successfully" });
@@ -26,6 +28,7 @@ exports.getUsers = async (req, res) => {
             message: "Please enter valid email and Password",
           });
       }
+    }
     }else{
       res.send({ message: "No such user found" });
     }
