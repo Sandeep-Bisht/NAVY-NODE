@@ -220,6 +220,70 @@ exports.sendReminder = async (req, res) => {
     let url = `http://inho.in/confirmation/${token}`;
 
     let payload = {
+      flow_id: "655c5722bc0f5344d4063614",
+      sender: "NHODDN",
+      recipients: [
+        {
+          mobiles: `91${guestNumber}`,
+          link: url,
+        },
+      ],
+    };
+
+    try {
+      const options = {
+        method: "POST",
+        hostname: "api.msg91.com",
+        port: null,
+        path: "/api/v5/flow/",
+        headers: {
+          authkey: "223758APRHg1EMKR5b39f7a8",
+          "content-type": "application/json",
+        },
+      };
+
+      const req = http.request(options, function (res) {
+        const chunks = [];
+        res.on("data", function (chunk) {
+          chunks.push(chunk);
+        });
+
+        res.on("end", function () {
+          const body = Buffer.concat(chunks);
+          let msgResponse = body.toString();
+          if (msgResponse) {
+            smsSend(msgResponse);
+          }
+        });
+      });
+
+      req.write(JSON.stringify(payload));
+      req.end();
+    } catch (error) {
+      res.send({ message: "Somthing went wrong in sending reminder" });
+    }
+  }
+};
+
+exports.sendReminderForNavyday = async (req, res) => {
+  let { guestNumber, _id } = req.body;
+  let user = await addInvites.findOne({ _id });
+  let smsSend = async (status) => {
+    let response = JSON.parse(status);
+    let user = await addInvites.findOne({ _id });
+    if (response.type == "success") {
+      user.reminderStatus = "Reminder Sent";
+      let updateEntry = await user.save();
+      res.send({ message: status });
+    } else {
+      res.send({ message: status });
+    }
+  };
+  if (user) {
+    let token = user.stringToken;
+    let url = `http://inho.in/confirmation/${token}`;
+
+    let payload = {
       flow_id: "655c57eb261de1502e2059f2",
       sender: "NHODDN",
       recipients: [

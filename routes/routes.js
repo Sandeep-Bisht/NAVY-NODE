@@ -32,6 +32,7 @@ router.post("/sendPreInvitation", sendPreInvitation);
 router.post("/sendFestivalWishes", sendFestivalWishes)
 // Category api
 router.post("/sendReminder", sendReminder);
+router.post("/sendReminderForNavyday", sendReminderForNavyday);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
 router.patch('/updatecategory', updateCategory)
