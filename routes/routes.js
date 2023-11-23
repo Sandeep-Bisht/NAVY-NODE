@@ -5,7 +5,7 @@ const { getUsers } = require("../controller/adminAuth.js");
 const { userRregistration } = require("../controller/registration.js")
 const { addGuestList } = require("../controller/addInvites");
 const { getGuestList } = require("../controller/addInvites");
-const { sendInvitation, sendReminder, sendPreInvitation, sendFestivalWishes  } = require("../controller/sendInvitation.js");
+const { sendInvitation, sendReminder, sendPreInvitation, sendFestivalWishes, sendReminderForNavyday  } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
 const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory, getGuestListByCategoryId, deleteCategoryById } = require('../controller/category.js');
@@ -32,6 +32,7 @@ router.post("/sendPreInvitation", sendPreInvitation);
 router.post("/sendFestivalWishes", sendFestivalWishes)
 // Category api
 router.post("/sendReminder", sendReminder);
+router.post("/sendReminderForNavyday", sendReminderForNavyday);
 router.post("/createcategory", createCategory);
 router.get('/getcategories', getCategories);
 router.patch('/updatecategory', updateCategory)
