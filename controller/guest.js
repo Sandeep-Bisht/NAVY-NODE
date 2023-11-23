@@ -12,7 +12,9 @@ exports.updateGuest = async(req, res) => {
         guestOfficeNumber,
         guestEmail,
         guestCategory,
-        guestAddress
+        guestAddress,
+        invitedForNavyDay,
+        invitedForPreNavyDay
       } = req.body;
 
         let user = await addInvites.findById(_id)
@@ -26,7 +28,8 @@ exports.updateGuest = async(req, res) => {
         user.guestEmail = guestEmail
         user.guestCategory = guestCategory
         user.guestAddress = guestAddress
-
+        user.invitedForNavyDay = invitedForNavyDay ? true : false
+        user.invitedForPreNavyDay = invitedForPreNavyDay ? true : false
 
         try {
             let updateEntry = await user.save()
