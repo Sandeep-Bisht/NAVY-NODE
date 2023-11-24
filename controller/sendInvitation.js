@@ -217,7 +217,7 @@ exports.sendReminder = async (req, res) => {
   };
   if (user) {
     let token = user.stringToken;
-    let url = `http://inho.in/confirmation/${token}`;
+    let url = `http://inho.in/preNavydayConfirmation/${token}`;
 
     let payload = {
       flow_id: "655c5722bc0f5344d4063614",

@@ -7,7 +7,7 @@ const { addGuestList } = require("../controller/addInvites");
 const { getGuestList } = require("../controller/addInvites");
 const { sendInvitation, sendReminder, sendPreInvitation, sendFestivalWishes, sendReminderForNavyday  } = require("../controller/sendInvitation.js");
 const { sendInvitationToAll } = require("../controller/sendInvitation.js");
-const { markAvailability, verifyGuestByToken } = require("../controller/availability.js");
+const { markAvailability, verifyGuestByToken, markPreNavydayAvailability } = require("../controller/availability.js");
 const { createCategory, getCategories, updateCategory, getGuestListByCategoryId, deleteCategoryById } = require('../controller/category.js');
 const { getCartsCounts , getCategoryUserCount , getConfirmationCount, getConfirmationGuest, getPresentGuest } = require('../controller/dashboardapi.js')
 const { createDepartment , getDepartments , updateDepartment, deleteDepartmentById } = require('../controller/department.js')
@@ -20,6 +20,7 @@ const { downloadGuestList } = require("../controller/downloadGuestList.js")
 router.post("/getuser", getUsers);
 router.post("/userRregistration", userRregistration);
 router.post("/markAvailability", markAvailability);
+router.post("/markPreNavydayAvailability", markPreNavydayAvailability);
 router.get("/verifyGuestByToken", verifyGuestByToken)
 router.post("/addGuestList", addGuestList);
 router.get("/getGuestList", getGuestList);
