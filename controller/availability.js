@@ -34,3 +34,22 @@ exports.markAvailability = async (req, res) => {
         res.send({ message: "No such user found" })
     }
 }
+
+exports.markPreNavydayAvailability = async (req, res) => {  
+    let { guest_response, _id} = req.body;
+    let guest = await addInvites.findOne({ _id })     
+    try {
+        // console.log("inside try markAvailability", guest)
+        if (guest) {
+                guest.preNavydayAvailability = guest_response;
+                let updateEntry = await guest.save()
+                res.send({ message: "Availability mark successfully" })
+                    
+        } else {
+            res.status(401).send({message:"user did not matched"})
+        }
+
+    } catch (error) {
+        res.send({ message: "No such user found" })
+    }
+}
