@@ -20,7 +20,7 @@ exports.sendPreInvitation = async (req, res) => {
     let response = JSON.parse(status);
     let user = await addInvites.findOne({ _id });
     if (response.type == "success") {
-      user.invitationStatus = "Invitation Sent";
+      user.preInvitationStatus = "Invitation Sent";
       user.preInvitation = "Yes"
       user.stringToken = generatedString;
       let updateEntry = await user.save();
@@ -208,7 +208,7 @@ exports.sendReminder = async (req, res) => {
     let response = JSON.parse(status);
     let user = await addInvites.findOne({ _id });
     if (response.type == "success") {
-      user.reminderStatus = "Reminder Sent";
+      user.preNavidayReminderStatus = "Reminder Sent";
       let updateEntry = await user.save();
       res.send({ message: status });
     } else {
