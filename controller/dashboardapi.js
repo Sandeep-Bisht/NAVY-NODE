@@ -75,7 +75,7 @@ exports.getConfirmationGuest = async(req, res) => {
 
       let preNavydayGuestList = await addInvites.find({
         $and: [
-          {availability:"yes"},
+          {preNavydayAvailability:"yes"},
           {preInvitation:"Yes"}
         ]
       })   

@@ -14,7 +14,6 @@ const { createDepartment , getDepartments , updateDepartment, deleteDepartmentBy
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
 const { markAttendance, getPresentGuestList } = require("../controller/attendanceMaster.js");
 // //const { handle404Route } = require('../controller/404')
-const { downloadGuestList } = require("../controller/downloadGuestList.js")
 
 
 router.post("/getuser", getUsers);
