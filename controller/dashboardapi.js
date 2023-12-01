@@ -6,7 +6,7 @@ let category = require("../models/category");
 exports.getCartsCounts = async(req, res) => {
     let usersCount = await addInvites.count()
     let sentSmsCount =  await addInvites.find({invitationStatus:"Invitation Sent"}).count()
-    let pendingSmsCount =  await addInvites.find({invitationStatus:"null"}).count()
+    let pendingSmsCount =  await addInvites.find({invitationStatus:"Not Sent"}).count()
     let failedSmsCount = await addInvites.find({invitationStatus:"failed"}).count()
 
     let responseObj = {
@@ -37,7 +37,7 @@ exports.getCategoryUserCount = async(req, res) => {
 }
 
 exports.getConfirmationCount = async(req, res) => {
-    let pendingCount = await addInvites.find({availability:"null"}).count()
+    let pendingCount = await addInvites.find({availability:"Not Responded"}).count()
     let regretCount =  await addInvites.find({availability:"no"}).count()
     let confirmCount =  await addInvites.find({availability:"yes"}).count()
 
