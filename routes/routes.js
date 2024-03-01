@@ -13,6 +13,7 @@ const { getCartsCounts , getCategoryUserCount , getConfirmationCount, getConfirm
 const { createDepartment , getDepartments , updateDepartment, deleteDepartmentById } = require('../controller/department.js')
 const { updateGuest , deleteGuest } = require('../controller/guest.js')
 const { markAttendance, getPresentGuestList } = require("../controller/attendanceMaster.js");
+const { sendRegularUpdateMsg } = require("../controller/sendRegularUpdateMsg.js")
 // //const { handle404Route } = require('../controller/404')
 
 
@@ -30,6 +31,8 @@ router.post("/saveDepartment", createDepartment);
 router.post("/sendInvitationToAll", sendInvitationToAll);
 router.post("/sendPreInvitation", sendPreInvitation);
 router.post("/sendFestivalWishes", sendFestivalWishes)
+
+router.post("/sendRegularUpdateMsg", sendRegularUpdateMsg)
 // Category api
 router.post("/sendReminder", sendReminder);
 router.post("/sendReminderForNavyday", sendReminderForNavyday);

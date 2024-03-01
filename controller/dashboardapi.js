@@ -118,7 +118,7 @@ exports.getPresentGuest = async(req, res) => {
     console.log("getPresentGuest hit")
     let guestList = await PresentGuestList.find()    
     let navyDayGuestList = await PresentGuestList.find({
-        attendentDate : "12/4/2022"
+        attendentDate : "12/4/2023"
         // $and: [
         //   {availability:"yes"},
         //   {navydayInvitation:"Yes"}
@@ -128,7 +128,7 @@ exports.getPresentGuest = async(req, res) => {
       console.log("getPresentGuest hit list", navyDayGuestList)
 
       let preNavydayGuestList = await PresentGuestList.find({
-        attendentDate : "12/3/2022"
+        attendentDate : "12/3/2023"
         // $and: [
         //   {availability:"yes"},
         //   {preInvitation:"Yes"}
